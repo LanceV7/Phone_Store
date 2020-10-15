@@ -1,0 +1,6 @@
+<!-- Inserisci in questo file le customizzazioni-->
+@media screen and (max-width: 575px) {
+    img .img-fluid {
+        !important max-width: 30%;
+    }
+}
