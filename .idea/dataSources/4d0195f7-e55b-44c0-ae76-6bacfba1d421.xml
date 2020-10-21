@@ -914,23 +914,23 @@ SELECT|sys.sys_config:null
 </ObjectGrants>
     </user>
     <table id="286" parent="3" name="acquista"/>
-    <table id="287" parent="3" name="admin"/>
-    <table id="288" parent="3" name="carrello"/>
-    <table id="289" parent="3" name="cartadicredito"/>
-    <table id="290" parent="3" name="categoria"/>
-    <table id="291" parent="3" name="prodotto_categoria"/>
-    <table id="292" parent="3" name="telefono"/>
-    <table id="293" parent="3" name="utente"/>
-    <column id="294" parent="286" name="codiceUtente">
+    <table id="287" parent="3" name="carrello"/>
+    <table id="288" parent="3" name="cartadicredito"/>
+    <table id="289" parent="3" name="categoria"/>
+    <table id="290" parent="3" name="prodotto_categoria"/>
+    <table id="291" parent="3" name="telefono"/>
+    <table id="292" parent="3" name="utente"/>
+    <table id="293" parent="3" name="utentespecial"/>
+    <column id="294" parent="286" name="email">
       <Position>1</Position>
-      <DataType>int|0s</DataType>
+      <DataType>varchar(25)|0s</DataType>
     </column>
     <column id="295" parent="286" name="codiceTel">
       <Position>2</Position>
       <DataType>int|0s</DataType>
     </column>
-    <index id="296" parent="286" name="codiceUtente">
-      <ColNames>codiceUtente</ColNames>
+    <index id="296" parent="286" name="email">
+      <ColNames>email</ColNames>
       <Type>btree</Type>
     </index>
     <index id="297" parent="286" name="codiceTel">
@@ -938,213 +938,212 @@ SELECT|sys.sys_config:null
       <Type>btree</Type>
     </index>
     <foreign-key id="298" parent="286" name="acquista_ibfk_1">
-      <ColNames>codiceUtente</ColNames>
+      <ColNames>email</ColNames>
       <RefTableName>utente</RefTableName>
-      <RefColNames>codiceUtente</RefColNames>
+      <RefColNames>email</RefColNames>
     </foreign-key>
     <foreign-key id="299" parent="286" name="acquista_ibfk_2">
       <ColNames>codiceTel</ColNames>
       <RefTableName>telefono</RefTableName>
       <RefColNames>codiceTel</RefColNames>
     </foreign-key>
-    <column id="300" parent="287" name="email">
-      <Position>1</Position>
-      <DataType>char(1)|0s</DataType>
-      <NotNull>1</NotNull>
-    </column>
-    <column id="301" parent="287" name="password">
-      <Position>2</Position>
-      <DataType>char(1)|0s</DataType>
-      <NotNull>1</NotNull>
-    </column>
-    <column id="302" parent="287" name="codiceTel">
-      <Position>3</Position>
-      <DataType>int|0s</DataType>
-    </column>
-    <index id="303" parent="287" name="codiceTel">
-      <ColNames>codiceTel</ColNames>
-      <Type>btree</Type>
-    </index>
-    <key id="304" parent="287" name="PRIMARY">
-      <NameSurrogate>1</NameSurrogate>
-      <ColNames>email</ColNames>
-      <Primary>1</Primary>
-    </key>
-    <foreign-key id="305" parent="287" name="admin_ibfk_1">
-      <ColNames>codiceTel</ColNames>
-      <RefTableName>telefono</RefTableName>
-      <RefColNames>codiceTel</RefColNames>
-      <OnUpdate>cascade</OnUpdate>
-      <OnDelete>cascade</OnDelete>
-    </foreign-key>
-    <column id="306" parent="288" name="codiceCarrello">
+    <column id="300" parent="287" name="codiceCarrello">
       <Position>1</Position>
       <DataType>int|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <key id="307" parent="288" name="PRIMARY">
+    <key id="301" parent="287" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>codiceCarrello</ColNames>
       <Primary>1</Primary>
     </key>
-    <column id="308" parent="289" name="numero_carta">
+    <column id="302" parent="288" name="numero_carta">
       <Position>1</Position>
       <DataType>char(1)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="309" parent="289" name="data_di_scadenza">
+    <column id="303" parent="288" name="data_di_scadenza">
       <Position>2</Position>
       <DataType>date|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="310" parent="289" name="titolare">
+    <column id="304" parent="288" name="titolare">
       <Position>3</Position>
       <DataType>char(20)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="311" parent="289" name="codiceUtente">
+    <column id="305" parent="288" name="email">
       <Position>4</Position>
-      <DataType>int|0s</DataType>
+      <DataType>varchar(25)|0s</DataType>
     </column>
-    <index id="312" parent="289" name="CartadiCredito">
-      <ColNames>codiceUtente</ColNames>
+    <index id="306" parent="288" name="CartadiCredito">
+      <ColNames>email</ColNames>
       <Type>btree</Type>
     </index>
-    <key id="313" parent="289" name="PRIMARY">
+    <key id="307" parent="288" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>numero_carta</ColNames>
       <Primary>1</Primary>
     </key>
-    <foreign-key id="314" parent="289" name="cartadicredito_ibfk_1">
-      <ColNames>codiceUtente</ColNames>
+    <foreign-key id="308" parent="288" name="cartadicredito_ibfk_1">
+      <ColNames>email</ColNames>
       <RefTableName>utente</RefTableName>
-      <RefColNames>codiceUtente</RefColNames>
+      <RefColNames>email</RefColNames>
       <OnUpdate>cascade</OnUpdate>
       <OnDelete>cascade</OnDelete>
     </foreign-key>
-    <column id="315" parent="290" name="id">
+    <column id="309" parent="289" name="id">
       <Position>1</Position>
       <DataType>int|0s</DataType>
       <NotNull>1</NotNull>
       <SequenceIdentity>null</SequenceIdentity>
     </column>
-    <column id="316" parent="290" name="nome">
+    <column id="310" parent="289" name="nome">
       <Position>2</Position>
       <DataType>varchar(45)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <key id="317" parent="290" name="PRIMARY">
+    <key id="311" parent="289" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>id</ColNames>
       <Primary>1</Primary>
     </key>
-    <column id="318" parent="291" name="idprodotto">
+    <column id="312" parent="290" name="idprodotto">
       <Position>1</Position>
       <DataType>int|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="319" parent="291" name="idcategoria">
+    <column id="313" parent="290" name="idcategoria">
       <Position>2</Position>
       <DataType>int|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <index id="320" parent="291" name="idprodotto">
+    <index id="314" parent="290" name="idprodotto">
       <ColNames>idprodotto</ColNames>
       <Type>btree</Type>
     </index>
-    <foreign-key id="321" parent="291" name="prodotto_categoria_ibfk_1">
+    <foreign-key id="315" parent="290" name="prodotto_categoria_ibfk_1">
       <ColNames>idprodotto</ColNames>
       <RefTableName>categoria</RefTableName>
       <RefColNames>id</RefColNames>
       <OnUpdate>cascade</OnUpdate>
       <OnDelete>cascade</OnDelete>
     </foreign-key>
-    <foreign-key id="322" parent="291" name="prodotto_categoria_ibfk_2">
+    <foreign-key id="316" parent="290" name="prodotto_categoria_ibfk_2">
       <ColNames>idprodotto</ColNames>
       <RefTableName>telefono</RefTableName>
       <RefColNames>codiceTel</RefColNames>
       <OnUpdate>cascade</OnUpdate>
       <OnDelete>cascade</OnDelete>
     </foreign-key>
-    <column id="323" parent="292" name="codiceTel">
+    <column id="317" parent="291" name="codiceTel">
       <Position>1</Position>
       <DataType>int|0s</DataType>
       <NotNull>1</NotNull>
       <SequenceIdentity>null</SequenceIdentity>
     </column>
-    <column id="324" parent="292" name="marca">
+    <column id="318" parent="291" name="marca">
       <Position>2</Position>
-      <DataType>char(20)|0s</DataType>
+      <DataType>char(50)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="325" parent="292" name="descrizione">
+    <column id="319" parent="291" name="descrizione">
       <Position>3</Position>
       <DataType>longtext|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="326" parent="292" name="prezzo">
+    <column id="320" parent="291" name="prezzo">
       <Position>4</Position>
       <DataType>double|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="327" parent="292" name="quantita">
+    <column id="321" parent="291" name="quantita">
       <Position>5</Position>
       <DataType>int|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <key id="328" parent="292" name="PRIMARY">
+    <column id="322" parent="291" name="foto">
+      <Position>6</Position>
+      <DataType>longtext|0s</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <key id="323" parent="291" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>codiceTel</ColNames>
       <Primary>1</Primary>
     </key>
-    <column id="329" parent="293" name="codiceUtente">
+    <column id="324" parent="292" name="nome">
       <Position>1</Position>
-      <DataType>int|0s</DataType>
+      <DataType>char(20)|0s</DataType>
       <NotNull>1</NotNull>
-      <SequenceIdentity>null</SequenceIdentity>
     </column>
-    <column id="330" parent="293" name="nome">
+    <column id="325" parent="292" name="cognome">
       <Position>2</Position>
       <DataType>char(20)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="331" parent="293" name="cognome">
+    <column id="326" parent="292" name="indirizzo">
       <Position>3</Position>
-      <DataType>char(20)|0s</DataType>
-      <NotNull>1</NotNull>
-    </column>
-    <column id="332" parent="293" name="indirizzo">
-      <Position>4</Position>
       <DataType>char(100)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="333" parent="293" name="email">
+    <column id="327" parent="292" name="email">
+      <Position>4</Position>
+      <DataType>varchar(25)|0s</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="328" parent="292" name="password">
       <Position>5</Position>
       <DataType>char(100)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="334" parent="293" name="password">
+    <column id="329" parent="292" name="codiceCarrello">
       <Position>6</Position>
-      <DataType>char(100)|0s</DataType>
-      <NotNull>1</NotNull>
-    </column>
-    <column id="335" parent="293" name="codiceCarrello">
-      <Position>7</Position>
       <DataType>int|0s</DataType>
     </column>
-    <index id="336" parent="293" name="codiceCarrello">
+    <index id="330" parent="292" name="codiceCarrello">
       <ColNames>codiceCarrello</ColNames>
+      <Type>btree</Type>
+    </index>
+    <key id="331" parent="292" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <ColNames>email</ColNames>
+      <Primary>1</Primary>
+    </key>
+    <foreign-key id="332" parent="292" name="utente_ibfk_1">
+      <ColNames>codiceCarrello</ColNames>
+      <RefTableName>carrello</RefTableName>
+      <RefColNames>codiceCarrello</RefColNames>
+      <OnUpdate>cascade</OnUpdate>
+      <OnDelete>cascade</OnDelete>
+    </foreign-key>
+    <column id="333" parent="293" name="email">
+      <Position>1</Position>
+      <DataType>varchar(20)|0s</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="334" parent="293" name="password">
+      <Position>2</Position>
+      <DataType>varchar(20)|0s</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="335" parent="293" name="codiceTel">
+      <Position>3</Position>
+      <DataType>int|0s</DataType>
+    </column>
+    <index id="336" parent="293" name="codiceTel">
+      <ColNames>codiceTel</ColNames>
       <Type>btree</Type>
     </index>
     <key id="337" parent="293" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
-      <ColNames>codiceUtente</ColNames>
+      <ColNames>email</ColNames>
       <Primary>1</Primary>
     </key>
-    <foreign-key id="338" parent="293" name="utente_ibfk_1">
-      <ColNames>codiceCarrello</ColNames>
-      <RefTableName>carrello</RefTableName>
-      <RefColNames>codiceCarrello</RefColNames>
+    <foreign-key id="338" parent="293" name="utentespecial_ibfk_1">
+      <ColNames>codiceTel</ColNames>
+      <RefTableName>telefono</RefTableName>
+      <RefColNames>codiceTel</RefColNames>
       <OnUpdate>cascade</OnUpdate>
       <OnDelete>cascade</OnDelete>
     </foreign-key>

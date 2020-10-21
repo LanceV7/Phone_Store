@@ -56,13 +56,14 @@
                 </div>
             </li>
         </ul>
-        <a class="navbar-brand" href="">
+        <a class="navbar-brand" href="Login.jsp">
             <img src="img/guest-32.png" width="30" height="30" class="d-inline-block align-top" alt=""> User</a>
         &emsp;&emsp;
         <a class="navbar-brand" href="Carrello.jsp">
             <img src="img/cart-64.png" width="30" height="30" class="d-inline-block align-top" alt=""> Carrello</a>
     </div>
 </nav>
-
+<%
+%>
 </body>
 </html>

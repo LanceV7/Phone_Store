@@ -13,7 +13,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-@WebServlet(name = "HomeServlet", urlPatterns = "", loadOnStartup = 1)
+@WebServlet("/HomeServlet")
 public class HomeServlet extends javax.servlet.http.HttpServlet {
     private final ProdottoModel prodottoModel = new ProdottoModel();
 

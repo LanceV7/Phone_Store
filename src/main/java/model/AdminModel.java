@@ -1,10 +1,12 @@
 package model;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-public class AdminModel implements DataAccesObjectInterface<Admin>{
+
+public class AdminModel implements DAOInterface<String,Admin>{
     private final DriverManagerConnectionPool dmcp;
 
     public AdminModel(DriverManagerConnectionPool dmcp) {
@@ -13,25 +15,27 @@ public class AdminModel implements DataAccesObjectInterface<Admin>{
         System.out.println("DriverManager  AdminModel creation....");
     }
 
-    private static final String TABLE_NAME = "Admin";
+    public AdminModel() {
+        dmcp = DriverManagerConnectionPool.getIstance();
+    }
+
+    private static final String TABLE_NAME = "Utentespecial";
     @Override
-    public void doSave(Admin admin) throws SQLException {
+    public void doSave(Admin a) throws SQLException {
         //Dichiari un oggetto di tipo connection.
         Connection connection = null;
         //Dichiari un oggetto di tipo prepared statament
         PreparedStatement preparedStatement = null;
         //Crei la stringa per effettuare l'operazione di inserimento.
-        String insertSQL = "INSERT INTO " + AdminModel.TABLE_NAME
-                + " (email, password) VALUES (?,?)";
-
+        String insertSQL = "INSERT INTO " + AdminModel.TABLE_NAME + "(email, password) VALUES (?,?)";
         try {
             //Prendi la connessione.
             connection = dmcp.getConnection();
             preparedStatement = connection.prepareStatement(insertSQL);
 
             //Setti i paramentri
-            preparedStatement.setString(1, admin.getEmail());
-            preparedStatement.setString(2, admin.getPassword());
+            preparedStatement.setString(1, a.getEmail());
+            preparedStatement.setString(2, a.getPassword());
 
             preparedStatement.executeUpdate();
 
@@ -48,19 +52,18 @@ public class AdminModel implements DataAccesObjectInterface<Admin>{
     }
 
     @Override
-    public boolean doDelete(Admin admin) throws SQLException {
+    public boolean doDelete(String key) throws SQLException {
         Connection connection = null;
         PreparedStatement preparedStatement = null;
-
         int result;
 
-        String deleteSQL = "DELETE FROM" + AdminModel.TABLE_NAME + "WHERE email = ?";
+        String deleteSQL = "DELETE FROM " + AdminModel.TABLE_NAME +" WHERE email = ?";
 
-        try {
+        try{
             connection = dmcp.getConnection();
             preparedStatement = connection.prepareStatement(deleteSQL);
 
-            preparedStatement.setString(1, admin.getEmail());
+            preparedStatement.setString(1, key);
             result = preparedStatement.executeUpdate();
             connection.commit();
         }finally {
@@ -71,76 +74,60 @@ public class AdminModel implements DataAccesObjectInterface<Admin>{
                 dmcp.releaseConnection(connection);
             }
         }
-
         return (result!=0);
     }
 
     @Override
-    public Admin doRetrieveByKey(Admin admin) throws SQLException {
+    public Admin doRetrieveByKey(String key) throws SQLException {
         Connection connection = null;
-        PreparedStatement preparedStatement = null;
+        PreparedStatement ps = null;
 
-        Admin a = new Admin();
-        String email = admin.getEmail();
+        Admin a= new Admin();
 
         String selectSQL = "SELECT * FROM " + AdminModel.TABLE_NAME + " WHERE email = ?";
 
         try{
             connection = dmcp.getConnection();
-            preparedStatement = connection.prepareStatement(selectSQL);
-            preparedStatement.setString(1,email);
-            ResultSet rs = preparedStatement.executeQuery();
+            ps= connection.prepareStatement(selectSQL);
+            ps.setString(1, key);
+            ResultSet rs = ps.executeQuery();
 
             while(rs.next()){
-                a.setEmail(rs.getString("email"));
-                a.setPassword(rs.getString("password"));
+                a.setEmail(rs.getString(1));
+                a.setPassword(rs.getString(2));
 
             }
         }finally {
             try {
-                if (preparedStatement != null)
-                    preparedStatement.close();
+                if (ps != null)
+                    ps.close();
             } finally {
                 dmcp.releaseConnection(connection);
             }
 
         }return a;
-
     }
 
     @Override
     public ArrayList<Admin> doRetrieveAll() throws SQLException {
-        Connection connection = null;
-        PreparedStatement preparedStatement = null;
+        try(Connection connection = dmcp.getConnection()){
+            String selectSQL = "SELECT * FROM " + AdminModel.TABLE_NAME;
+            PreparedStatement ps = connection.prepareStatement(selectSQL);
+            ResultSet rs = ps.executeQuery();
 
-        ArrayList<Admin> lista_admin = new ArrayList<>();
-        String selectSQL = "SELECT * FROM" + AdminModel.TABLE_NAME;
-
-        try {
-            connection = dmcp.getConnection();
-            preparedStatement = connection.prepareStatement(selectSQL);
-
-            ResultSet rs = preparedStatement.executeQuery();
-
-            while (rs.next()) {
-
-                Admin a = new Admin();
-                a.setEmail(rs.getString("email"));
-                a.setPassword(rs.getString("password"));
-                lista_admin.add(a);
+            ArrayList<Admin> admin= new ArrayList<>();
+            while(rs.next()){
+                Admin a= new Admin();
+                a.setEmail(rs.getString(1));
+                a.setPassword(rs.getString(2));
+                admin.add(a);
             }
 
-        } finally {
-            try {
-                if (preparedStatement != null)
-                    preparedStatement.close();
-            } finally {
-                dmcp.releaseConnection(connection);
-            }
+            return admin;
+
+        }catch (SQLException e){
+            throw new RuntimeException(e);
         }
-        return lista_admin;
-
-
     }
 }
 

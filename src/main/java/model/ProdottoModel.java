@@ -7,7 +7,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ProdottoModel implements DataAccesObjectInterface<Prodotto>{
+public class ProdottoModel implements DAOInterface<Integer, Prodotto>{
 
     private DriverManagerConnectionPool dmcp;
 
@@ -19,9 +19,7 @@ public class ProdottoModel implements DataAccesObjectInterface<Prodotto>{
 
     private static final String TABLE_NAME = "Telefono";
 
-    public ProdottoModel() {
-
-    }
+    public ProdottoModel() { dmcp = DriverManagerConnectionPool.getIstance(); }
 
     @Override
     public void doSave(Prodotto prodotto) throws SQLException {
@@ -53,19 +51,18 @@ public class ProdottoModel implements DataAccesObjectInterface<Prodotto>{
     }
 
     @Override
-    public boolean doDelete(Prodotto prodotto) throws SQLException {
-
+    public boolean doDelete(Integer key) throws SQLException {
         Connection connection = null;
         PreparedStatement preparedStatement = null;
         int result;
 
-        String deleteSQL = "DELETE FROM" + ProdottoModel.TABLE_NAME + "WHERE id= ?";
+        String deleteSQL = "DELETE FROM " + ProdottoModel.TABLE_NAME +" WHERE codiceTel = ?";
 
         try{
             connection = dmcp.getConnection();
             preparedStatement = connection.prepareStatement(deleteSQL);
 
-            preparedStatement.setInt(1, prodotto.getCodiceTel());
+            preparedStatement.setInt(1, key);
             result = preparedStatement.executeUpdate();
             connection.commit();
         }finally {
@@ -80,19 +77,18 @@ public class ProdottoModel implements DataAccesObjectInterface<Prodotto>{
     }
 
     @Override
-    public Prodotto doRetrieveByKey(Prodotto item) throws SQLException {
+    public Prodotto doRetrieveByKey(Integer key) throws SQLException {
         Connection connection = null;
         PreparedStatement ps = null;
 
         Prodotto p = new Prodotto();
-        int id = item.getCodiceTel();
 
         String selectSQL = "SELECT * FROM " + ProdottoModel.TABLE_NAME + " WHERE codiceTel = ?";
 
         try{
             connection = dmcp.getConnection();
             ps= connection.prepareStatement(selectSQL);
-            ps.setInt(1,id);
+            ps.setInt(1, key);
             ResultSet rs = ps.executeQuery();
 
             while(rs.next()){
@@ -113,12 +109,10 @@ public class ProdottoModel implements DataAccesObjectInterface<Prodotto>{
         }return p;
     }
 
-
-
     @Override
     public ArrayList<Prodotto> doRetrieveAll() throws SQLException {
         try(Connection connection = dmcp.getConnection()){
-            String selectSQL = "SELECT * FROM" + ProdottoModel.TABLE_NAME;
+            String selectSQL = "SELECT * FROM " + ProdottoModel.TABLE_NAME;
             PreparedStatement ps = connection.prepareStatement(selectSQL);
             ResultSet rs = ps.executeQuery();
 
@@ -154,6 +148,4 @@ public class ProdottoModel implements DataAccesObjectInterface<Prodotto>{
         }
         return categorie;
     }
-
-
 }

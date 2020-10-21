@@ -6,8 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-public class CategoriaModel implements DataAccesObjectInterface<Categoria>{
-
+public class CategoriaModel implements DAOInterface<Integer,Categoria> {
     private DriverManagerConnectionPool dmcp;
 
     public CategoriaModel(DriverManagerConnectionPool dmcp) {
@@ -19,33 +18,26 @@ public class CategoriaModel implements DataAccesObjectInterface<Categoria>{
     private static final String TABLE_NAME = "Categoria";
 
     public CategoriaModel() {
-
+        dmcp = DriverManagerConnectionPool.getIstance();
     }
-
 
     @Override
     public void doSave(Categoria categoria) throws SQLException {
-        //Dichiari un oggetto di tipo connection.
         Connection connection = null;
-        //Dichiari un oggetto di tipo prepared statament
         PreparedStatement preparedStatement = null;
-        //Crei la stringa per effettuare l'operazione di inserimento.
-        String insertSQL = "INSERT INTO " + CategoriaModel.TABLE_NAME
-                + " (id, nome) VALUES (?,?)";
 
-        try {
-            //Prendi la connessione.
+        String insertSQL = "INSERT INTO " + CategoriaModel.TABLE_NAME +  "(id, nome) VALUES (?,?)" ;
+
+        try{
             connection = dmcp.getConnection();
             preparedStatement = connection.prepareStatement(insertSQL);
 
-            //Setti i paramentri
-            preparedStatement.setInt(1, categoria.getId());
-            preparedStatement.setString(2, categoria.getNome());
-
+            preparedStatement.setInt(1,categoria.getId());
+            preparedStatement.setString(2,categoria.getNome());
             preparedStatement.executeUpdate();
-
             connection.commit();
-        } finally {
+
+        }finally {
             try {
                 if (preparedStatement != null)
                     preparedStatement.close();
@@ -53,24 +45,22 @@ public class CategoriaModel implements DataAccesObjectInterface<Categoria>{
                 dmcp.releaseConnection(connection);
             }
         }
-
-
     }
 
     @Override
-    public boolean doDelete(Categoria categoria) throws SQLException {
+    public boolean doDelete(Integer key) throws SQLException {
         Connection connection = null;
         PreparedStatement preparedStatement = null;
 
         int result;
 
-        String deleteSQL = "DELETE FROM" + CategoriaModel.TABLE_NAME + "WHERE id = ?";
+        String deleteSQL = "DELETE FROM " + CategoriaModel.TABLE_NAME + " WHERE id = ?";
 
         try {
             connection = dmcp.getConnection();
             preparedStatement = connection.prepareStatement(deleteSQL);
 
-            preparedStatement.setInt(1, categoria.getId());
+            preparedStatement.setInt(1,key);
             result = preparedStatement.executeUpdate();
             connection.commit();
         }finally {
@@ -86,19 +76,18 @@ public class CategoriaModel implements DataAccesObjectInterface<Categoria>{
     }
 
     @Override
-    public Categoria doRetrieveByKey(Categoria categoria) throws SQLException {
+    public Categoria doRetrieveByKey(Integer key) throws SQLException {
         Connection connection = null;
         PreparedStatement preparedStatement = null;
 
         Categoria c = new Categoria();
-        int id = categoria.getId();
 
         String selectSQL = "SELECT * FROM " + CategoriaModel.TABLE_NAME + " WHERE id = ?";
 
         try{
             connection = dmcp.getConnection();
             preparedStatement = connection.prepareStatement(selectSQL);
-            preparedStatement.setInt(1,id);
+            preparedStatement.setInt(1,key);
             ResultSet rs = preparedStatement.executeQuery();
 
             while(rs.next()){
@@ -121,10 +110,10 @@ public class CategoriaModel implements DataAccesObjectInterface<Categoria>{
     public ArrayList<Categoria> doRetrieveAll() throws SQLException {
         Connection connection = null;
         PreparedStatement preparedStatement = null;
-        String order;
 
         ArrayList<Categoria> lista_categorie = new ArrayList<>();
-        String selectSQL = "SELECT * FROM" + CategoriaModel.TABLE_NAME;
+        String selectSQL = "SELECT * FROM " + CategoriaModel.TABLE_NAME;
+
 
         try {
             connection = dmcp.getConnection();
@@ -150,4 +139,5 @@ public class CategoriaModel implements DataAccesObjectInterface<Categoria>{
         }
         return lista_categorie;
     }
+
 }

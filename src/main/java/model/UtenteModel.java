@@ -6,7 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-public class UtenteModel implements DataAccesObjectInterface<Utente> {
+public class UtenteModel implements DAOInterface<String,Utente> {
     private final DriverManagerConnectionPool dmcp;
 
     public UtenteModel(DriverManagerConnectionPool dmcp) {
@@ -17,32 +17,26 @@ public class UtenteModel implements DataAccesObjectInterface<Utente> {
 
     private static final String TABLE_NAME = "Utente";
 
+    public UtenteModel(){ dmcp=DriverManagerConnectionPool.getIstance();}
+
     @Override
     public void doSave(Utente utente) throws SQLException {
-        //Dichiari un oggetto di tipo connection.
         Connection connection = null;
-        //Dichiari un oggetto di tipo prepared statament
         PreparedStatement preparedStatement = null;
-        //Crei la stringa per effettuare l'operazione di inserimento.
-        String insertSQL = "INSERT INTO " + UtenteModel.TABLE_NAME
-                + " (nome, cognome,indirizzo, email, password) VALUES (?,?,?,?,?)";
 
-        try {
-            //Prendi la connessione.
+        String insertSQL = "INSERT INTO " + UtenteModel.TABLE_NAME +  "( nome, cognome, indirizzo, email, password) VALUES (?,?,?,?,?)" ;
+
+        try{
             connection = dmcp.getConnection();
             preparedStatement = connection.prepareStatement(insertSQL);
 
-            //Setti i paramentri
             preparedStatement.setString(1, utente.getNome());
             preparedStatement.setString(2, utente.getCognome());
             preparedStatement.setString(3, utente.getIndirizzo());
             preparedStatement.setString(4, utente.getEmail());
             preparedStatement.setString(5, utente.getPassword());
 
-            preparedStatement.executeUpdate();
-
-            connection.commit();
-        } finally {
+        }finally {
             try {
                 if (preparedStatement != null)
                     preparedStatement.close();
@@ -53,19 +47,18 @@ public class UtenteModel implements DataAccesObjectInterface<Utente> {
     }
 
     @Override
-    public boolean doDelete(Utente utente) throws SQLException {
+    public boolean doDelete(String key) throws SQLException {
         Connection connection = null;
         PreparedStatement preparedStatement = null;
-
         int result;
 
-        String deleteSQL = "DELETE FROM" + UtenteModel.TABLE_NAME + "WHERE email = ?";
+        String deleteSQL = "DELETE FROM " + UtenteModel.TABLE_NAME +" WHERE email = ?";
 
-        try {
+        try{
             connection = dmcp.getConnection();
             preparedStatement = connection.prepareStatement(deleteSQL);
 
-            preparedStatement.setString(4, utente.getEmail());
+            preparedStatement.setString(1, key);
             result = preparedStatement.executeUpdate();
             connection.commit();
         }finally {
@@ -76,38 +69,36 @@ public class UtenteModel implements DataAccesObjectInterface<Utente> {
                 dmcp.releaseConnection(connection);
             }
         }
-
         return (result!=0);
     }
 
     @Override
-    public Utente doRetrieveByKey(Utente utente) throws SQLException {
+    public Utente doRetrieveByKey(String key) throws SQLException {
         Connection connection = null;
-        PreparedStatement preparedStatement = null;
+        PreparedStatement ps = null;
 
-        Utente u = new Utente();
-        String email = utente.getEmail();
+        Utente u= new Utente();
 
         String selectSQL = "SELECT * FROM " + UtenteModel.TABLE_NAME + " WHERE email = ?";
 
         try{
             connection = dmcp.getConnection();
-            preparedStatement = connection.prepareStatement(selectSQL);
-            preparedStatement.setString(4,email);
-            ResultSet rs = preparedStatement.executeQuery();
+            ps= connection.prepareStatement(selectSQL);
+            ps.setString(1, key);
+            ResultSet rs = ps.executeQuery();
 
             while(rs.next()){
-                u.setNome(rs.getString("nome"));
-                u.setCognome(rs.getString("cognome"));
-                u.setIndirizzo(rs.getString("indirizzo"));
-                u.setEmail(rs.getString("email"));
-                u.setPassword(rs.getString("password"));
+                u.setEmail(rs.getString(4));
+                u.setNome(rs.getString(1));
+                u.setCognome(rs.getString(2));
+                u.setIndirizzo(rs.getString(3));
+                u.setPassword(rs.getString(5));
 
             }
         }finally {
             try {
-                if (preparedStatement != null)
-                    preparedStatement.close();
+                if (ps != null)
+                    ps.close();
             } finally {
                 dmcp.releaseConnection(connection);
             }
@@ -117,44 +108,26 @@ public class UtenteModel implements DataAccesObjectInterface<Utente> {
 
     @Override
     public ArrayList<Utente> doRetrieveAll() throws SQLException {
-        Connection connection = null;
-        PreparedStatement preparedStatement = null;
+        try(Connection connection = dmcp.getConnection()){
+            String selectSQL = "SELECT * FROM " + UtenteModel.TABLE_NAME;
+            PreparedStatement ps = connection.prepareStatement(selectSQL);
+            ResultSet rs = ps.executeQuery();
 
-        ArrayList<Utente> lista_utenti = new ArrayList<>();
-        String selectSQL = "SELECT * FROM" + UtenteModel.TABLE_NAME;
-
-
-        try {
-            connection = dmcp.getConnection();
-            preparedStatement = connection.prepareStatement(selectSQL);
-
-            ResultSet rs = preparedStatement.executeQuery();
-
-            while (rs.next()) {
-
+            ArrayList<Utente> utente = new ArrayList<>();
+            while(rs.next()){
                 Utente u = new Utente();
-                u.setNome(rs.getString("nome"));
-                u.setCognome(rs.getString("cognome"));
-                u.setIndirizzo(rs.getString("indirizzo"));
-                u.setEmail(rs.getString("email"));
-                u.setPassword(rs.getString("password"));
-                lista_utenti.add(u);
+                u.setEmail(rs.getString(4));
+                u.setNome(rs.getString(1));
+                u.setCognome(rs.getString(2));
+                u.setIndirizzo(rs.getString(3));
+                u.setPassword(rs.getString(5));
+                utente.add(u);
             }
 
-        } finally {
-            try {
-                if (preparedStatement != null)
-                    preparedStatement.close();
-            } finally {
-                dmcp.releaseConnection(connection);
-            }
+            return utente;
+
+        }catch (SQLException e){
+            throw new RuntimeException(e);
         }
-        return lista_utenti;
-
     }
-
-
-
-
 }
-

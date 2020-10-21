@@ -62,4 +62,10 @@ public class DriverManagerConnectionPool {
     public synchronized void releaseConnection(Connection connection) throws SQLException {
         if(connection != null) freeDbConnections.add(connection);
     }
+
+    public static DriverManagerConnectionPool getIstance () {return LazyHolder.ISTANCE;}
+
+    private static class LazyHolder {
+        private static final DriverManagerConnectionPool ISTANCE = new DriverManagerConnectionPool();
+    }
 }

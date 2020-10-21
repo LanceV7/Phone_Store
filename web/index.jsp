@@ -17,6 +17,7 @@
 </head>
 <body>
 <%@include file="nav.jsp"%>
-</body>
+<%@include file="ProdottoCard.jsp"%>
 <%@include file = "footer.jsp" %>
+</body>
 </html>

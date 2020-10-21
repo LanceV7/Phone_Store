@@ -9,11 +9,14 @@
 <%@ page import = "java.util.List, model.Prodotto"%>
 
 <%
-    List<Prodotto> list =(List<Prodotto>)  request.getAttribute("prodotti");
-    int size = list.size();
-%>
-<div class="card" style="width: 18rem;">
-    <%for (Prodotto c : list) { %>
+    Object obj = request.getAttribute("prodotto");
+    List<Prodotto> lst = null;
+    if (obj instanceof List)
+    lst = (List<Prodotto>) obj;
+
+    if(lst != null ? !lst.isEmpty() : false){
+        for (Prodotto c : lst) { %>
+    <div class="card" style="width: 18rem;">
     <img class="card-img-top" src=<%c.getFoto();%>>
     <div class="card-body">
         <h5 class="card-title"><%c.getMarca();%></h5>
@@ -25,7 +28,8 @@
     </ul>
     <div class="card-body">
         <a href="#" class="card-link"><i class="fas fa-shopping-cart"></i>AGGIUNGI</a>
-        <a href="#" class="card-link"></i>ACQUISTA</a>
+        <a href="#" class="card-link">ACQUISTA</a>
     </div>
-    <%} %>
-</div>
+    </div>
+    <%}
+        } %>
