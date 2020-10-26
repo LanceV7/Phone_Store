@@ -35,16 +35,11 @@ public class RegistrazioneServlet extends HttpServlet {
             utente.setIndirizzo(request.getParameter("indirizzo"));
             utente.setPassword(request.getParameter("password"));
 
-            if (!utente.getEmail().equals(email)) {
-
-                utenteModel.doSave(utente);
-                session.setAttribute("login", true);
-                session.setAttribute("utente", utente);
-
-                RequestDispatcher d = getServletContext().getRequestDispatcher("/index.jsp");
-                d.forward(request, response);
-            }
-
+            utenteModel.doSave(utente);
+            session.setAttribute("login", true);
+            session.setAttribute("utente", utente);
+            RequestDispatcher d = getServletContext().getRequestDispatcher("/index.jsp");
+            d.forward(request, response);
 
         }catch (SQLIntegrityConstraintViolationException e)
         {  e.printStackTrace();

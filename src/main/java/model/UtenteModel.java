@@ -24,7 +24,7 @@ public class UtenteModel implements DAOInterface<String,Utente> {
         Connection connection = null;
         PreparedStatement preparedStatement = null;
 
-        String insertSQL = "INSERT INTO " + UtenteModel.TABLE_NAME +  "( nome, cognome, indirizzo, email, password) VALUES (?,?,?,?,?)" ;
+        String insertSQL = "INSERT INTO " + UtenteModel.TABLE_NAME +  " ( nome, cognome, indirizzo, email, password) VALUES (?,?,?,?,?)" ;
 
         try{
             connection = dmcp.getConnection();
@@ -35,7 +35,7 @@ public class UtenteModel implements DAOInterface<String,Utente> {
             preparedStatement.setString(3, utente.getIndirizzo());
             preparedStatement.setString(4, utente.getEmail());
             preparedStatement.setString(5, utente.getPassword());
-
+            preparedStatement.executeUpdate();
         }finally {
             try {
                 if (preparedStatement != null)
@@ -72,12 +72,18 @@ public class UtenteModel implements DAOInterface<String,Utente> {
         return (result!=0);
     }
 
+    /**
+     *
+     * @param key
+     * @return null se non trova nulla, ritorna un utente se ha trovato l utente
+     * @throws SQLException
+     */
     @Override
     public Utente doRetrieveByKey(String key) throws SQLException {
         Connection connection = null;
         PreparedStatement ps = null;
 
-        Utente u= new Utente();
+        Utente u = null;
 
         String selectSQL = "SELECT * FROM " + UtenteModel.TABLE_NAME + " WHERE email = ?";
 
@@ -88,6 +94,8 @@ public class UtenteModel implements DAOInterface<String,Utente> {
             ResultSet rs = ps.executeQuery();
 
             while(rs.next()){
+                u= new Utente();
+
                 u.setEmail(rs.getString(4));
                 u.setNome(rs.getString(1));
                 u.setCognome(rs.getString(2));

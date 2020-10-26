@@ -82,7 +82,7 @@ public class AdminModel implements DAOInterface<String,Admin>{
         Connection connection = null;
         PreparedStatement ps = null;
 
-        Admin a= new Admin();
+        Admin a= null;
 
         String selectSQL = "SELECT * FROM " + AdminModel.TABLE_NAME + " WHERE email = ?";
 
@@ -93,6 +93,7 @@ public class AdminModel implements DAOInterface<String,Admin>{
             ResultSet rs = ps.executeQuery();
 
             while(rs.next()){
+                a= new Admin();
                 a.setEmail(rs.getString(1));
                 a.setPassword(rs.getString(2));
 

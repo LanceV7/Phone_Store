@@ -119,10 +119,12 @@ public class ProdottoModel implements DAOInterface<Integer, Prodotto>{
             ArrayList<Prodotto> prodotti = new ArrayList<>();
             while(rs.next()){
                 Prodotto p = new Prodotto();
+                p.setCodiceTel(rs.getInt(1));
                 p.setMarca(rs.getString(2));
                 p.setDescrizione(rs.getString(3));
                 p.setPrezzo(rs.getDouble(4));
                 p.setQuantita(rs.getInt(5));
+                p.setFoto(rs.getString(6));
                 p.setCategorie(getCategorie(connection,p.getCodiceTel()));
                 prodotti.add(p);
             }

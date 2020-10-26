@@ -1,5 +1,7 @@
 package control;
 
+import model.Admin;
+import model.AdminModel;
 import model.Utente;
 import model.UtenteModel;
 
@@ -16,22 +18,29 @@ import java.sql.SQLException;
 
 @WebServlet("/LoginServlet")
 public class LoginServlet extends HttpServlet {
+    UtenteModel utenteModel = new UtenteModel();
+    AdminModel adminModel= new AdminModel();
+
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         HttpSession session = request.getSession();
         String email = request.getParameter("email");
         String password = request.getParameter("password");
 
-        Utente utente = new Utente();
-        utente.setEmail(email);
-        utente.setPassword(password);
-        UtenteModel utenteModel = new UtenteModel();
+        Utente utente = null;
+        Admin admin = null;
+
         try {
             utente = utenteModel.doRetrieveByKey(email);
-            if(utente!=null && utente.getEmail().equals(email) && utente.getPassword().equals(password)){
+            admin= adminModel.doRetrieveByKey(email);
+            if(utente!=null ? utente.getEmail().equals(email) && utente.getPassword().equals(password) : false){
                 session.setAttribute("login", true);
                 session.setAttribute("utente",utente);
                 response.sendRedirect("index.jsp");
-            }else{
+            }else if (admin!=null? admin.getEmail().equals(email) && admin.getPassword().equals(password) : false){
+                session.setAttribute("login", true);
+                session.setAttribute("admin",admin);
+                response.sendRedirect("index.jsp");
+            } else {
                 String errore="Email o password ";
                 request.setAttribute("errore", errore);
                 RequestDispatcher d = getServletContext().getRequestDispatcher("../Login.jsp");
@@ -40,8 +49,6 @@ public class LoginServlet extends HttpServlet {
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
-
-
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
