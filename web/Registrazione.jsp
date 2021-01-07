@@ -33,7 +33,7 @@
         This is a success alert—check it out!
     </div>
     <% }%>
-<form class="text-center border border-dark p-5" action="RegistrazioneServlet"onsubmit="validate()" method="post">
+<form class="text-center border border-dark p-5" action="RegistrazioneServlet" method="post">
 
     <p class="h4 mb-4">Sign up</p>
 

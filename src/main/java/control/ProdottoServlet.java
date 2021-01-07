@@ -21,12 +21,14 @@ public class ProdottoServlet extends HttpServlet {
         Prodotto prodotto = null;
         try {
             prodotto = prodottoModel.doRetrieveByKey(codiceTel);
+
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
         req.setAttribute("prodotto", prodotto);
 
-        RequestDispatcher requestDispatcher = req.getRequestDispatcher("/ProdottoCard.jsp");
+        RequestDispatcher requestDispatcher = req.getRequestDispatcher("/Prodotto.jsp");
+        requestDispatcher.forward(req,resp);
     }
 
     @Override

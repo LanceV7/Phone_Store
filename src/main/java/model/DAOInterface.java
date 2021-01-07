@@ -12,5 +12,6 @@ public interface DAOInterface<K, T> {
     void doSave(T item) throws SQLException;
     boolean doDelete(K key) throws SQLException;
     T doRetrieveByKey(K key) throws SQLException;
+    boolean doUpdate(T item) throws SQLException;
     ArrayList<T> doRetrieveAll() throws SQLException;
 }

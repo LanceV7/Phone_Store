@@ -44,7 +44,20 @@
 
                     <!-- Content -->
                     <h5 class="text-uppercase">Info</h5>
-                    <p>Here you can use rows and columns to organize your footer content.</p>
+                    <p>Phonestore è uno store online che propone ai clienti telefoni top gamma a prezzi stracciati.</p>
+
+                    <!-- Facebook -->
+                    <a class="fb-ic">
+                        <i class="fab fa-facebook-f fa-lg white-text mr-md-5 mr-3 fa-2x"> </i>
+                    </a>
+                    <!-- Twitter -->
+                    <a class="tw-ic">
+                        <i class="fab fa-twitter fa-lg white-text mr-md-5 mr-3 fa-2x"> </i>
+                    </a>
+                    <!-- Google +-->
+                    <a class="gplus-ic">
+                        <i class="fab fa-google-plus-g fa-lg white-text mr-md-5 mr-3 fa-2x"> </i>
+                    </a>
 
                 </div>
                 <!-- Grid column -->
@@ -59,13 +72,13 @@
 
                     <ul class="list-unstyled">
                         <li>
-                            <a href="#!">Link 1</a>
+                            <a href="#!">Chi siamo</a>
                         </li>
                         <li>
-                            <a href="#!">Link 2</a>
+                            <a href="#!">Dove puoi trovarci</a>
                         </li>
                         <li>
-                            <a href="#!">Link 3</a>
+                            <a href="#!">Contatti</a>
                         </li>
                         <li>
                             <a href="#!">Link 4</a>
@@ -104,6 +117,11 @@
 
         </div>
         <!-- Footer Links -->
+        <!-- Copyright -->
+        <div class="footer-copyright text-center py-3">© 2020 Copyright:
+            <a href="https://mdbootstrap.com/"> Phonestore.com</a>
+        </div>
+        <!-- Copyright -->
 
     </footer>
     <!-- Footer -->

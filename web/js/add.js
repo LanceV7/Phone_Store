@@ -5,38 +5,51 @@ $.getJSON("prova", function (json) {
 
     })
 })
+
 function constractCard(obj){
-    let card = $('<div class = "card">')
-    let cardimg =$('<img class="card-img-top">')
-    let cardb=$('<div class="card-body">')
-    let cardtit=$('<h5 class="card-title">')
-    let cardtxt= $('<p class="card-text">')
-    let cardul= $('<ul class="list-group list-group-flush">')
-    let carddisp= $('<li class="list-group-item">')
-    let cardprice= $('<li class="list-group-item">')
-    let cardbody2=$('<div class="card-body">')
-    let cardadd=$('<a class="card-link 1" ><i class="fas fa-shopping-cart"></i>AGGIUNGI</a>')
-    let cardbuy=$('<a class="card-link 2" >ACQUISTA</a>')
 
-    $(cardimg).attr("src",obj.foto)
-    $(cardtit).html(obj.marca)
-    $(cardtxt).html(obj.descrizione)
-    $(carddisp).html(obj.quantita)
-    $(cardprice).html(obj.prezzo)
+    let row = $('<div class="row">')
+    let col = $('<div class="col-md-7">')
+    let container = $('<div class="container">')
+    let a =$('<a>')
+    let img = $('<img class="img-fluid rounded mb-3 mb-md-0"></img>')
+    let div = $(' <div class="col-md-5">')
+    let h3 = $('<h3>')
+    let h1 = $('<h1 class="my-4">')
+    let p = $('<p>')
+    let btn = $('<a class="btn btn-primary">Visualizza</a>')
 
-    $(cardb).append(cardtit)
-    $(cardb).append(cardtxt)
+    $(p).html(obj.descrizione)
+    $(h3).html(obj.marca)
+    $(img).attr("src", obj.foto)
 
-    $(cardul).append(carddisp)
-    $(cardul).append(cardprice)
+    $(div).append(h3)
+    $(div).append(p)
+    $(div).append(btn)
 
-    $(cardbody2).append(cardadd)
-    $(cardbody2).append(cardbuy)
+    $(a).append(img)
 
-    $(card).append(cardimg)
-    $(card).append(cardb)
-    $(card).append(cardul)
-    $(card).append(cardbody2)
+    $(col).append(a)
 
-    return card;
+    $(row).append(col)
+    $(row).append(div)
+
+    $(container).append(h1)
+    $(container).append(row)
+
+    return container;
+
 }
+
+
+
+
+
+
+
+
+
+
+
+
+

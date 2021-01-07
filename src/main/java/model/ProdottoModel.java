@@ -76,6 +76,7 @@ public class ProdottoModel implements DAOInterface<Integer, Prodotto>{
         return (result!=0);
     }
 
+
     @Override
     public Prodotto doRetrieveByKey(Integer key) throws SQLException {
         Connection connection = null;
@@ -136,6 +137,32 @@ public class ProdottoModel implements DAOInterface<Integer, Prodotto>{
         }
     }
 
+    @Override
+    public boolean doUpdate(Prodotto item) throws SQLException {
+        Connection connection = null;
+        PreparedStatement ps = null;
+        int result = 0;
+        String updateSQL = "UPDATE Telefono SET" + "prezzo = ?, quantità = ?";
+
+        try {
+            connection = dmcp.getConnection();
+            ps = connection.prepareStatement(updateSQL);
+            ps.setDouble(1,item.getPrezzo());
+            ps.setInt(2,item.getQuantita());
+
+            result = ps.executeUpdate();
+        }finally {
+            try {
+                if (ps != null)
+                    ps.close();
+            } finally {
+                dmcp.releaseConnection(connection);
+            }
+        }
+        return (result!=0);
+
+    }
+
     private static List<Categoria> getCategorie(Connection connection, int codiceTel) throws SQLException {
 
         PreparedStatement ps = connection.prepareStatement("SELECT * FROM Categoria LEFT JOIN prodotto_categoria ON id=id WHERE id = ?");
@@ -150,4 +177,6 @@ public class ProdottoModel implements DAOInterface<Integer, Prodotto>{
         }
         return categorie;
     }
+
+
 }

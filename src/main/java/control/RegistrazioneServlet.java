@@ -1,5 +1,6 @@
 package control;
 
+import model.DriverManagerConnectionPool;
 import model.Utente;
 import model.UtenteModel;
 
@@ -24,6 +25,8 @@ public class RegistrazioneServlet extends HttpServlet {
 
         HttpSession session = request.getSession();
         String error = "";
+        DriverManagerConnectionPool dmcp = (DriverManagerConnectionPool)getServletContext().getAttribute("DriverManager");
+        UtenteModel utenteModel = new UtenteModel(dmcp);
 
         try {
             String email = request.getParameter("email");
@@ -43,7 +46,7 @@ public class RegistrazioneServlet extends HttpServlet {
 
         }catch (SQLIntegrityConstraintViolationException e)
         {  e.printStackTrace();
-         request.setAttribute("Error",new Boolean(true));
+            request.setAttribute("Error",new Boolean(true));
 
         }catch (SQLException throwables) {
             throwables.printStackTrace();

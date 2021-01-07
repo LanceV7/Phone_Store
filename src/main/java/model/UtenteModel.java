@@ -138,4 +138,60 @@ public class UtenteModel implements DAOInterface<String,Utente> {
             throw new RuntimeException(e);
         }
     }
+
+    public Utente doRetrieveByEmail(String email){
+        Connection connection = null;
+        PreparedStatement ps = null;
+        String selectSQL = "SELECT * FROM" + UtenteModel.TABLE_NAME + "WHERE email = ?";
+        Utente u = null;
+
+        try {
+            connection = dmcp.getConnection();
+            ps = connection.prepareStatement(selectSQL);
+            ps.setString(1, email);
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()){
+                u = new Utente();
+                u.setEmail(rs.getString(4));
+                u.setNome(rs.getString(1));
+                u.setCognome(rs.getString(2));
+                u.setIndirizzo(rs.getString(3));
+                u.setPassword(rs.getString(5));
+            }
+
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return u;
+    }
+
+    @Override
+    public boolean doUpdate(Utente item) throws SQLException {
+        Connection connection = null;
+        PreparedStatement ps = null;
+        int result = 0;
+        String updateSQL = "UPDATE Utente SET" + "nome = ?, cognome = ?, indirizzo = ?, email = ?, password = ?";
+
+        try {
+            connection = dmcp.getConnection();
+            ps = connection.prepareStatement(updateSQL);
+            ps.setString(1,item.getNome());
+            ps.setString(2,item.getCognome());
+            ps.setString(3,item.getIndirizzo());
+            ps.setString(4,item.getEmail());
+            ps.setString(5,item.getPassword());
+
+
+            result = ps.executeUpdate();
+        }finally {
+            try {
+                if (ps != null)
+                    ps.close();
+            } finally {
+                dmcp.releaseConnection(connection);
+            }
+        }
+        return (result!=0);
+    }
 }

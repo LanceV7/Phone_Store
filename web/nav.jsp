@@ -5,7 +5,7 @@
   Time: 11:50
   To change this template use File | Settings | File Templates.
 --%>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page contentType="text/html;charset=UTF-8" %>
 <html>
 <head>
     <!-- meta -->
@@ -18,6 +18,7 @@
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <title></title>
 </head>
 <body>
 <!-- nav -->
@@ -47,7 +48,7 @@
             &emsp;&emsp;
             <li class="navListSearch">
                 <div >
-                    <form class="form-inline my-2 my-lg-0" role="search" action="/search/" method="post">
+                    <form class="form-inline my-2 my-lg-0" role="search" action="${pageContext.request.contextPath}/search/" method="post">
                         <div class="form-group">
                             <input type="text" name="request" class="form-control" placeholder="Cerca un prodotto">
                         </div>
@@ -56,14 +57,36 @@
                 </div>
             </li>
         </ul>
-        <a class="navbar-brand" href="Login.jsp">
-            <img src="img/guest-32.png" width="30" height="30" class="d-inline-block align-top" alt=""> User</a>
-        &emsp;&emsp;
+
+
+        <%
+            if(session.getAttribute("utente") != null){
+        %>
+        <li class="nav-item  dropdown">
+            <a class="nav-link dropdown-toggle" id="navbarDropdown1" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> Il mio Account </a>
+            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                <a class="dropdown-item" href="">Profilo</a>
+                <a class="dropdown-item" href="">I miei ordini</a>
+                <a class="dropdown-item" href="Logout.jsp">Logout</a>
+            </div>
+        </li>
         <a class="navbar-brand" href="Carrello.jsp">
             <img src="img/cart-64.png" width="30" height="30" class="d-inline-block align-top" alt=""> Carrello </a>
+        <%
+            }else if(session.getAttribute("admin") != null){
+        %>
+
+        <%
+         }else {
+        %>
+        <a class="navbar-brand" href="Login.jsp">
+            <img src="img/guest-32.png" width="30" height="30" class="d-inline-block align-top" alt=""> User</a>
+        <a class="navbar-brand" href="Carrello.jsp">
+            <img src="img/cart-64.png" width="30" height="30" class="d-inline-block align-top" alt=""> Carrello </a>
+        <%}%>
+
     </div>
 </nav>
-<%
-%>
+
 </body>
 </html>

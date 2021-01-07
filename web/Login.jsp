@@ -1,11 +1,4 @@
-<%@ page import="model.Utente" %><%--
-  Created by IntelliJ IDEA.
-  User: vince
-  Date: 15/10/2020
-  Time: 11:27
-  To change this template use File | Settings | File Templates.
---%>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page contentType="text/html;charset=UTF-8" %>
 <html>
 <head>
     <!-- meta -->
@@ -25,14 +18,7 @@
 </head>
 <body>
 <%@include file="nav.jsp"%>
-<%
-    Utente utente = new Utente();
-    Boolean isLog = (Boolean) request.getSession().getAttribute("login");
-    Object object = request.getSession().getAttribute("utente");
-    if(isLog!=null && isLog.equals(true) && object!=null && object instanceof Utente ) {
-        utente = (Utente) request.getSession().getAttribute("utente");
-    }
-%>
+
 <!-- Default form login -->
 <div class="container" id="verticale">
 <form class="text-center border border-dark p-5" action="LoginServlet" method="post">

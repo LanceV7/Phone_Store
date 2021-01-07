@@ -110,6 +110,11 @@ public class AdminModel implements DAOInterface<String,Admin>{
     }
 
     @Override
+    public boolean doUpdate(Admin item) throws SQLException {
+        return false;
+    }
+
+    @Override
     public ArrayList<Admin> doRetrieveAll() throws SQLException {
         try(Connection connection = dmcp.getConnection()){
             String selectSQL = "SELECT * FROM " + AdminModel.TABLE_NAME;

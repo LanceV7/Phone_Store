@@ -76,6 +76,11 @@ public class CategoriaModel implements DAOInterface<Integer,Categoria> {
     }
 
     @Override
+    public boolean doUpdate(Categoria item) throws SQLException {
+        return false;
+    }
+
+    @Override
     public Categoria doRetrieveByKey(Integer key) throws SQLException {
         Connection connection = null;
         PreparedStatement preparedStatement = null;
