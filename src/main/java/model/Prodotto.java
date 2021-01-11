@@ -6,6 +6,7 @@ import java.util.Objects;
 public class Prodotto {
     private int codiceTel;
     private String marca;
+    private String nome;
     private String descrizione;
     private double prezzo;
     private int quantita;
@@ -15,9 +16,10 @@ public class Prodotto {
     public Prodotto() {
     }
 
-    public Prodotto(int codiceTel, String marca, String descrizione, double prezzo, int quantita, List<Categoria> categorie, String foto) {
+    public Prodotto(int codiceTel, String marca,String nome, String descrizione, double prezzo, int quantita, List<Categoria> categorie, String foto) {
         this.codiceTel = codiceTel;
         this.marca = marca;
+        this.nome=nome;
         this.descrizione = descrizione;
         this.prezzo = prezzo;
         this.quantita = quantita;
@@ -40,6 +42,10 @@ public class Prodotto {
     public void setMarca(String marca) {
         this.marca = marca;
     }
+
+    public String getNome(){return nome;}
+
+    public void setNome(String nome) {this.nome=nome;}
 
     public String getDescrizione() {
         return descrizione;
@@ -104,6 +110,7 @@ public class Prodotto {
         return "Prodotto{" +
                 "codiceTel=" + codiceTel +
                 ", marca='" + marca + '\'' +
+                ", nome="+ nome+ '\'' +
                 ", descrizione='" + descrizione + '\'' +
                 ", prezzo=" + prezzo +
                 ", quantita=" + quantita +

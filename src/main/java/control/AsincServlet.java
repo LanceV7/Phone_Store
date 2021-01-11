@@ -22,7 +22,14 @@ public class AsincServlet extends HttpServlet {
         ProdottoModel p = new ProdottoModel();
         List<Prodotto> list = null;
         try {
-            list = p.doRetrieveAll();
+            String cat= req.getParameter("cat");
+            String srch= req.getParameter("srch");
+            if(cat != null)
+                list=p.doRetrieveByCat(cat);
+            else if(srch!= null)
+                list=p.doRetrieveBySrch(srch);
+            else
+                list = p.doRetrieveAll();
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }

@@ -44,7 +44,9 @@
 
                     <!-- Content -->
                     <h5 class="text-uppercase">Info</h5>
-                    <p>Here you can use rows and columns to organize your footer content.</p>
+                    <p>Salve e benvenuto su PhoneStore! Il team di PhoneStore è sempre al lavoro per offrirti la migliore
+                    esperienza di navigazione possibile e i prezzi più economici sul mercato perchè il nostro obbiettivo
+                    è soddisfare a pieno le esigenze di tutti gli utenti che ci scelgono e preferiscono</p>
 
                 </div>
                 <!-- Grid column -->
@@ -55,20 +57,17 @@
                 <div class="col-md-3 mb-md-0 mb-3">
 
                     <!-- Links -->
-                    <h5 class="text-uppercase">Links</h5>
+                    <h5 class="text-uppercase">Azienda</h5>
 
                     <ul class="list-unstyled">
                         <li>
-                            <a href="#!">Link 1</a>
+                            <a href="privacy.jsp">Politiche privacy</a>
                         </li>
                         <li>
-                            <a href="#!">Link 2</a>
+                            <a href="cookie.jsp">Politiche Cookie</a>
                         </li>
                         <li>
-                            <a href="#!">Link 3</a>
-                        </li>
-                        <li>
-                            <a href="#!">Link 4</a>
+                            <a href="pay.jsp">Pagamenti e fattura</a>
                         </li>
                     </ul>
 
@@ -79,20 +78,17 @@
                 <div class="col-md-3 mb-md-0 mb-3">
 
                     <!-- Links -->
-                    <h5 class="text-uppercase">Links</h5>
+                    <h5 class="text-uppercase">Social</h5>
 
                     <ul class="list-unstyled">
                         <li>
-                            <a href="#!">Link 1</a>
+                            <a href="https://www.facebook.com/Phonestore-101287568527634">Facebook</a>
                         </li>
                         <li>
-                            <a href="#!">Link 2</a>
+                            <a href="https://twitter.com/PhoneSt82641039">Twitter</a>
                         </li>
                         <li>
-                            <a href="#!">Link 3</a>
-                        </li>
-                        <li>
-                            <a href="#!">Link 4</a>
+                            <a href="https://www.instagram.com/phonestore_official01/?hl=it">Instagram</a>
                         </li>
                     </ul>
 
@@ -104,7 +100,13 @@
 
         </div>
         <!-- Footer Links -->
-
+        <div class="loghi" style="text-align: center">
+            <img alt="Verisign" src="https://images.eprice.it/layout/images/logo_verisign.png">
+            <a class="imgcarte"><img alt="" src="https://images.eprice.it/layout/images/ico_carte.png?3"></a>
+            <img alt="Netcomm" src="https://images.eprice.it/layout/images/netcomm_awards.png">
+            <a target="_blank"><img alt="Netcomm" src="https://images.eprice.it/layout/images/logo_netcomm.png"></a>
+        </div>
+        <footer style="text-align: center"> &copy; Copyright 2020 PhoneStore</footer>
     </footer>
     <!-- Footer -->
 </body>

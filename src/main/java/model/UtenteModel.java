@@ -96,11 +96,11 @@ public class UtenteModel implements DAOInterface<String,Utente> {
             while(rs.next()){
                 u= new Utente();
 
-                u.setEmail(rs.getString(4));
-                u.setNome(rs.getString(1));
-                u.setCognome(rs.getString(2));
-                u.setIndirizzo(rs.getString(3));
-                u.setPassword(rs.getString(5));
+                u.setEmail(rs.getString("email"));
+                u.setNome(rs.getString("nome"));
+                u.setCognome(rs.getString("cognome"));
+                u.setIndirizzo(rs.getString("indirizzo"));
+                u.setPassword(rs.getString("password"));
 
             }
         }finally {
