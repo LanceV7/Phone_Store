@@ -26,7 +26,7 @@ public class ProdottoModel implements DAOInterface<Integer, Prodotto>{
         Connection connection = null;
         PreparedStatement preparedStatement = null;
 
-        String insertSQL = "INSERT INTO " + ProdottoModel.TABLE_NAME +  "(codiceTel, marca, descrizione, prezzo, quantita) VALUES (?,?,?,?,?)" ;
+        String insertSQL = "INSERT INTO " + ProdottoModel.TABLE_NAME +  "(codiceTel, marca, nome, descrizione, prezzo, quantita, foto) VALUES (?,?,?,?,?,?,?)" ;
 
         try{
             connection = dmcp.getConnection();
@@ -34,9 +34,11 @@ public class ProdottoModel implements DAOInterface<Integer, Prodotto>{
 
             preparedStatement.setInt(1,prodotto.getCodiceTel());
             preparedStatement.setString(2,prodotto.getMarca() );
-            preparedStatement.setString(3, prodotto.getDescrizione());
-            preparedStatement.setDouble(4, prodotto.getPrezzo());
-            preparedStatement.setInt(5,prodotto.getQuantita());
+            preparedStatement.setString(3, prodotto.getNome());
+            preparedStatement.setString(4, prodotto.getDescrizione());
+            preparedStatement.setDouble(5, prodotto.getPrezzo());
+            preparedStatement.setInt(6,prodotto.getQuantita());
+            preparedStatement.setString(7, prodotto.getFoto());
             preparedStatement.executeUpdate();
             connection.commit();
 
@@ -76,7 +78,6 @@ public class ProdottoModel implements DAOInterface<Integer, Prodotto>{
         return (result!=0);
     }
 
-
     @Override
     public Prodotto doRetrieveByKey(Integer key) throws SQLException {
         Connection connection = null;
@@ -94,9 +95,10 @@ public class ProdottoModel implements DAOInterface<Integer, Prodotto>{
 
             while(rs.next()){
                 p.setMarca(rs.getString(2));
-                p.setDescrizione(rs.getString(3));
-                p.setPrezzo(rs.getDouble(4));
-                p.setQuantita(rs.getInt(5));
+                p.setNome(rs.getString(3));
+                p.setDescrizione(rs.getString(4));
+                p.setPrezzo(rs.getDouble(5));
+                p.setQuantita(rs.getInt(6));
 
             }
         }finally {
@@ -108,6 +110,61 @@ public class ProdottoModel implements DAOInterface<Integer, Prodotto>{
             }
 
         }return p;
+    }
+
+    public ArrayList<Prodotto> doRetrieveByCat(String cat)throws SQLException{
+        try(Connection connection = dmcp.getConnection()){
+            String selectSQL = "SELECT * FROM " + ProdottoModel.TABLE_NAME +" WHERE marca= ?";
+            PreparedStatement ps = connection.prepareStatement(selectSQL);
+            ps.setString(1,cat);
+            ResultSet rs = ps.executeQuery();
+
+            ArrayList<Prodotto> prodotti = new ArrayList<>();
+            while(rs.next()){
+                Prodotto p = new Prodotto();
+                p.setCodiceTel(rs.getInt(1));
+                p.setMarca(rs.getString(2));
+                p.setNome(rs.getString(3));
+                p.setDescrizione(rs.getString(4));
+                p.setPrezzo(rs.getDouble(5));
+                p.setQuantita(rs.getInt(6));
+                p.setFoto(rs.getString(7));
+                p.setCategorie(getCategorie(connection,p.getCodiceTel()));
+                prodotti.add(p);
+            }
+
+            return prodotti;
+
+        }catch (SQLException e){
+            throw new RuntimeException(e);
+        }
+    }
+    public ArrayList<Prodotto> doRetrieveBySrch(String srch)throws SQLException{
+        try(Connection connection = dmcp.getConnection()){
+            String selectSQL = "SELECT * FROM " + ProdottoModel.TABLE_NAME + " WHERE descrizione LIKE ?";
+            PreparedStatement ps = connection.prepareStatement(selectSQL);
+            ps.setString(1,"%"+srch+"%");
+            ResultSet rs = ps.executeQuery();
+
+            ArrayList<Prodotto> prodotti = new ArrayList<>();
+            while(rs.next()){
+                Prodotto p = new Prodotto();
+                p.setCodiceTel(rs.getInt(1));
+                p.setMarca(rs.getString(2));
+                p.setNome(rs.getString(3));
+                p.setDescrizione(rs.getString(4));
+                p.setPrezzo(rs.getDouble(5));
+                p.setQuantita(rs.getInt(6));
+                p.setFoto(rs.getString(7));
+                p.setCategorie(getCategorie(connection,p.getCodiceTel()));
+                prodotti.add(p);
+            }
+
+            return prodotti;
+
+        }catch (SQLException e){
+            throw new RuntimeException(e);
+        }
     }
 
     @Override
@@ -122,10 +179,11 @@ public class ProdottoModel implements DAOInterface<Integer, Prodotto>{
                 Prodotto p = new Prodotto();
                 p.setCodiceTel(rs.getInt(1));
                 p.setMarca(rs.getString(2));
-                p.setDescrizione(rs.getString(3));
-                p.setPrezzo(rs.getDouble(4));
-                p.setQuantita(rs.getInt(5));
-                p.setFoto(rs.getString(6));
+                p.setNome(rs.getString(3));
+                p.setDescrizione(rs.getString(4));
+                p.setPrezzo(rs.getDouble(5));
+                p.setQuantita(rs.getInt(6));
+                p.setFoto(rs.getString(7));
                 p.setCategorie(getCategorie(connection,p.getCodiceTel()));
                 prodotti.add(p);
             }
@@ -135,32 +193,6 @@ public class ProdottoModel implements DAOInterface<Integer, Prodotto>{
         }catch (SQLException e){
             throw new RuntimeException(e);
         }
-    }
-
-    @Override
-    public boolean doUpdate(Prodotto item) throws SQLException {
-        Connection connection = null;
-        PreparedStatement ps = null;
-        int result = 0;
-        String updateSQL = "UPDATE Telefono SET" + "prezzo = ?, quantità = ?";
-
-        try {
-            connection = dmcp.getConnection();
-            ps = connection.prepareStatement(updateSQL);
-            ps.setDouble(1,item.getPrezzo());
-            ps.setInt(2,item.getQuantita());
-
-            result = ps.executeUpdate();
-        }finally {
-            try {
-                if (ps != null)
-                    ps.close();
-            } finally {
-                dmcp.releaseConnection(connection);
-            }
-        }
-        return (result!=0);
-
     }
 
     private static List<Categoria> getCategorie(Connection connection, int codiceTel) throws SQLException {
@@ -178,5 +210,25 @@ public class ProdottoModel implements DAOInterface<Integer, Prodotto>{
         return categorie;
     }
 
-
+    public synchronized Boolean doUpdate(Prodotto item) throws SQLException {
+        Connection connection= null;
+        PreparedStatement ps= null;
+        String updateSQL= "UPDATE "+ ProdottoModel.TABLE_NAME + " SET "+ " prezzo=?, quantita=?";
+        int result=0;
+        try{
+            connection= dmcp.getConnection();
+            ps=connection.prepareStatement(updateSQL);
+            ps.setDouble(1,item.getPrezzo());
+            ps.setInt(2,item.getQuantita());
+            result = ps.executeUpdate();
+        }finally {
+            try {
+                if (ps != null)
+                    ps.close();
+            } finally {
+                dmcp.releaseConnection(connection);
+                }
+            }
+        return (result != 0);
+        }
 }

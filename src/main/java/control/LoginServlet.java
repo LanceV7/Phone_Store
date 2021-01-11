@@ -32,11 +32,11 @@ public class LoginServlet extends HttpServlet {
         try {
             utente = utenteModel.doRetrieveByKey(email);
             admin= adminModel.doRetrieveByKey(email);
-            if(utente != null && utente.getEmail().equals(email) && utente.getPassword().equals(password)){
+            if(utente!=null ? utente.getPassword().equals(password) : false){
                 session.setAttribute("login", true);
                 session.setAttribute("utente",utente);
                 response.sendRedirect("index.jsp");
-            }else if (admin != null && admin.getEmail().equals(email) && admin.getPassword().equals(password)){
+            }else if (admin!=null? admin.getPassword().equals(password) : false){
                 session.setAttribute("login", true);
                 session.setAttribute("admin",admin);
                 response.sendRedirect("Admin.jsp");

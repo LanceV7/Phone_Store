@@ -44,20 +44,9 @@
 
                     <!-- Content -->
                     <h5 class="text-uppercase">Info</h5>
-                    <p>Phonestore è uno store online che propone ai clienti telefoni top gamma a prezzi stracciati.</p>
-
-                    <!-- Facebook -->
-                    <a class="fb-ic">
-                        <i class="fab fa-facebook-f fa-lg white-text mr-md-5 mr-3 fa-2x"> </i>
-                    </a>
-                    <!-- Twitter -->
-                    <a class="tw-ic">
-                        <i class="fab fa-twitter fa-lg white-text mr-md-5 mr-3 fa-2x"> </i>
-                    </a>
-                    <!-- Google +-->
-                    <a class="gplus-ic">
-                        <i class="fab fa-google-plus-g fa-lg white-text mr-md-5 mr-3 fa-2x"> </i>
-                    </a>
+                    <p>Salve e benvenuto su PhoneStore! Il team di PhoneStore è sempre al lavoro per offrirti la migliore
+                    esperienza di navigazione possibile e i prezzi più economici sul mercato perchè il nostro obbiettivo
+                    è soddisfare a pieno le esigenze di tutti gli utenti che ci scelgono e preferiscono</p>
 
                 </div>
                 <!-- Grid column -->
@@ -68,20 +57,17 @@
                 <div class="col-md-3 mb-md-0 mb-3">
 
                     <!-- Links -->
-                    <h5 class="text-uppercase">Links</h5>
+                    <h5 class="text-uppercase">Azienda</h5>
 
                     <ul class="list-unstyled">
                         <li>
-                            <a href="#!">Chi siamo</a>
+                            <a href="privacy.jsp">Politiche privacy</a>
                         </li>
                         <li>
-                            <a href="#!">Dove puoi trovarci</a>
+                            <a href="cookie.jsp">Politiche Cookie</a>
                         </li>
                         <li>
-                            <a href="#!">Contatti</a>
-                        </li>
-                        <li>
-                            <a href="#!">Link 4</a>
+                            <a href="pay.jsp">Pagamenti e fattura</a>
                         </li>
                     </ul>
 
@@ -92,20 +78,17 @@
                 <div class="col-md-3 mb-md-0 mb-3">
 
                     <!-- Links -->
-                    <h5 class="text-uppercase">Links</h5>
+                    <h5 class="text-uppercase">Social</h5>
 
                     <ul class="list-unstyled">
                         <li>
-                            <a href="#!">Link 1</a>
+                            <a href="https://www.facebook.com/Phonestore-101287568527634">Facebook</a>
                         </li>
                         <li>
-                            <a href="#!">Link 2</a>
+                            <a href="https://twitter.com/PhoneSt82641039">Twitter</a>
                         </li>
                         <li>
-                            <a href="#!">Link 3</a>
-                        </li>
-                        <li>
-                            <a href="#!">Link 4</a>
+                            <a href="https://www.instagram.com/phonestore_official01/?hl=it">Instagram</a>
                         </li>
                     </ul>
 
@@ -117,12 +100,13 @@
 
         </div>
         <!-- Footer Links -->
-        <!-- Copyright -->
-        <div class="footer-copyright text-center py-3">© 2020 Copyright:
-            <a href="https://mdbootstrap.com/"> Phonestore.com</a>
+        <div class="loghi" style="text-align: center">
+            <img alt="Verisign" src="https://images.eprice.it/layout/images/logo_verisign.png">
+            <a class="imgcarte"><img alt="" src="https://images.eprice.it/layout/images/ico_carte.png?3"></a>
+            <img alt="Netcomm" src="https://images.eprice.it/layout/images/netcomm_awards.png">
+            <a target="_blank"><img alt="Netcomm" src="https://images.eprice.it/layout/images/logo_netcomm.png"></a>
         </div>
-        <!-- Copyright -->
-
+        <footer style="text-align: center"> &copy; Copyright 2020 PhoneStore</footer>
     </footer>
     <!-- Footer -->
 </body>

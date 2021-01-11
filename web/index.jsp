@@ -1,7 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-  <link rel="stylesheet" href="css/index.css">
   <!-- meta -->
   <meta charset=utf-8>
   <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no"/>
@@ -17,14 +16,18 @@
   <title> Phone Store</title>
 </head>
 <body>
-<%@include file="nav.jsp"%>
 
-<div id="main"></div>
+<%@include file="nav.jsp"%>
+<div id="main" class="mb-2"></div>
 
 <%@include file = "footer.jsp" %>
-</body>
 <script src="js/add.js"></script>
+<script>$.getJSON("prova", function (json) {
 
+  $.each(json, function() {
+    $("#main").append(constractCard(this))
 
-
+  })
+})</script>
+</body>
 </html>
