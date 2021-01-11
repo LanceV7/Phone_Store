@@ -14,7 +14,7 @@
     Object obj = request.getAttribute("prodotto");
     List<Prodotto> lst = null;
     if (obj instanceof List)
-    lst = (List<Prodotto>) obj;
+        lst = (List<Prodotto>) obj;
 
     if(lst != null ? !lst.isEmpty() : false){
         for (Prodotto c : lst) { %>
@@ -29,7 +29,7 @@
             </a>
         </div>
         <div class="col-md-5">
-            <h3><%c.getMarca();%>/h3>
+            <h2><%c.getNome();%></h2>
             <p><%c.getDescrizione();%></p>
             <p><%c.getQuantita();%></p>
 
@@ -42,5 +42,5 @@
 
 
 
-    <%}
-        } %>
+<%}
+} %>

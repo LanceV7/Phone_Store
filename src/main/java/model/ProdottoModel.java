@@ -56,7 +56,7 @@ public class ProdottoModel implements DAOInterface<Integer, Prodotto>{
     public boolean doDelete(Integer key) throws SQLException {
         Connection connection = null;
         PreparedStatement preparedStatement = null;
-        int result;
+        int result = 0;
 
         String deleteSQL = "DELETE FROM " + ProdottoModel.TABLE_NAME +" WHERE codiceTel = ?";
 
@@ -210,7 +210,7 @@ public class ProdottoModel implements DAOInterface<Integer, Prodotto>{
         return categorie;
     }
 
-    public synchronized Boolean doUpdate(Prodotto item) throws SQLException {
+    public synchronized boolean doUpdate(Prodotto item) throws SQLException {
         Connection connection= null;
         PreparedStatement ps= null;
         String updateSQL= "UPDATE "+ ProdottoModel.TABLE_NAME + " SET "+ " prezzo=?, quantita=?";

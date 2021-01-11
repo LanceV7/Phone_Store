@@ -12,29 +12,25 @@
     <title>Title</title>
 </head>
 <body>
+<%@include file="nav.jsp"%>
 <!--Table-->
-<table id="tablePreview" class="table">
+<form action="EliminaProdottoServlet" method="post">
+<table id="tablePreview" class="table table-sm">
     <!--Table head-->
-    <thead>
-    <tr>
+    <thead class="thead-dark>
+    <tr id="1">
         <th>#</th>
-        <th>First Name</th>
-        <th>Last Name</th>
-        <th>Username</th>
-        <th>Visits</th>
-        <th>Age</th>
-        <th>Country</th>
-        <th>First Name</th>
-        <th>Last Name</th>
-        <th>Username</th>
-        <th>Visits</th>
-        <th>Age</th>
-        <th>Country</th>
+        <th>Marca</th>
+        <th>Nome</th>
+        <th>Descrizione</th>
+        <th>Prezzo</th>
+        <th>Quantità</th>
+        <th></th>
     </tr>
     </thead>
     <!--Table head-->
     <!--Table body-->
-    <tbody>
+    <tbody id="main">
     <%
         Object obj = request.getAttribute("prodotto");
         List<Prodotto> lst = null;
@@ -43,54 +39,32 @@
 
         if(lst != null ? !lst.isEmpty() : false){
             for (Prodotto c : lst) { %>
-    <tr>
-        <th scope="row">1</th>
-        <td>Mark</td>
-        <td>Otto</td>
-        <td>@mdo</td>
-        <td>Mark</td>
-        <td>Otto</td>
-        <td>@mdo</td>
-        <td>Mark</td>
-        <td>Otto</td>
-        <td>@mdo</td>
-        <td>Mark</td>
-        <td>Otto</td>
-        <td>@mdo</td>
-    </tr>
-    <tr>
-        <th scope="row">2</th>
-        <td>Jacob</td>
-        <td>Thornton</td>
-        <td>@fat</td>
-        <td>Mark</td>
-        <td>Otto</td>
-        <td>@mdo</td>
-        <td>Jacob</td>
-        <td>Thornton</td>
-        <td>@fat</td>
-        <td>Mark</td>
-        <td>Otto</td>
-        <td>@mdo</td>
-    </tr>
-    <tr>
-        <th scope="row">3</th>
-        <td>Larry</td>
-        <td>the Bird</td>
-        <td>@twitter</td>
-        <td>Mark</td>
-        <td>Otto</td>
-        <td>@mdo</td>
-        <td>Jacob</td>
-        <td>Thornton</td>
-        <td>@fat</td>
-        <td>Mark</td>
-        <td>Otto</td>
-        <td>@mdo</td>
+    <tr id="2">
+        <th scope="row"><%c.getCodiceTel();%></th>
+        <td id="marca"><%c.getMarca();%></td>
+        <td id="nome"><%c.getNome();%></td>
+        <td id="descrizione"><%c.getDescrizione();%></td>
+        <td id="prezzo"><%c.getPrezzo();%></td>
+        <td id="qt"><%c.getQuantita();%></td>
+        <td><button type="submit">Elimina</button></td>
     </tr>
     </tbody>
     <!--Table body-->
 </table>
 <!--Table-->
+<%}
+} %>
+
+</form>
+<%@include file="footer.jsp"%>
 </body>
+<script src="js/EliminaPr.js"></script>
+<script>$.getJSON("prova", function (json) {
+
+    $.each(json, function() {
+        $("#main").append(constractCard(this))
+
+    })
+})</script>
+
 </html>

@@ -15,11 +15,7 @@ import java.sql.SQLException;
 
 @WebServlet("/EliminaProdottoServlet")
 public class EliminaProdottoServlet extends HttpServlet {
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
-    }
-
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) {
         int id = Integer.parseInt(request.getParameter("codiceTel"));
         DriverManagerConnectionPool dmcp = (DriverManagerConnectionPool) getServletContext().getAttribute("DriverManager");
         ProdottoModel prodottoModel = new ProdottoModel(dmcp);
@@ -33,9 +29,14 @@ public class EliminaProdottoServlet extends HttpServlet {
                 RequestDispatcher d = getServletContext().getRequestDispatcher("/Admin.jsp");
                 d.forward(request, response);
             }
-        } catch (SQLException throwables) {
+        } catch (SQLException | ServletException | IOException throwables) {
             throwables.printStackTrace();
         }
+
+    }
+
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
 
     }
 }

@@ -24,7 +24,7 @@
                 <h5 class="card-title" style="text-align: center">Benvenuto Admin</h5>
                 <p class="card-text" style="text-align: center">Cosa desideri fare?</p>
                 <a href="AggiungiProdotto.jsp" class="btn btn-primary">Aggiungere prodotto</a><br>
-                <a href="#" class="btn btn-primary">Eliminare il prodotto</a><br>
+                <a href="EliminaProdotto.jsp" class="btn btn-primary">Eliminare il prodotto</a><br>
                 <a href="#" class="btn btn-primary">Modifica prodotto</a><br>
                 <a href="#" class="btn btn-primary">Elimina utente</a><br>
             </div>
